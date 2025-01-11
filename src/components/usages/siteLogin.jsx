@@ -15,8 +15,8 @@ const SiteLogin = () => {
         
     };
 
-    const handleSubmit = (e) => {
-         e.preventDefault();
+   const handleSubmit = (e) => {
+    e.preventDefault();
 
     // Find the matching credential
     const matchingPass = credential.find((credent) => credent.passkey === passkey);
@@ -31,14 +31,18 @@ const SiteLogin = () => {
         return;
     }
 
-        
-        
     // Allow the user to vote
     alert("Congrats, you can vote!");
-        matchingPass.voted = true
-        // Redirect to the voting page
-        window.location.href = "https://admin-steel-iota.vercel.app/voter.html`;
-    };
+
+    // Update the voted status
+    matchingPass.voted = true;
+
+    // Save the updated credentials array back to localStorage
+    localStorage.setItem("credential", JSON.stringify(credential));
+
+    // Redirect to the voting page
+    window.location.href = "https://admin-steel-iota.vercel.app/voter.html";
+};
 
     return (
         <div className="w-full sm:mx-10 md:w-1/2 lg:w-1/3 border-[0.1px] sm:min-h-screen md:min-h-[50vh] rounded-lg flex relative text-blue-50 overflow-hidden flex-col justify-between items-center">
