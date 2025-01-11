@@ -41,7 +41,7 @@ const SiteLogin = () => {
         localStorage.setItem("credential", JSON.stringify(credential));
 
         // Redirect to the voting page
-        window.location.href = '/vote_site.html';
+        window.location.href = 'https://admin-steel-iota.vercel.app/voter.html';
     };
 
 
