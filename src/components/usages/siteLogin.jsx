@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
 const SiteLogin = () => {
+    
     const [passkey, setPasskey] = useState("");
     const [error, setError] = useState("");
 
     // Fetch credentials from localStorage
     const credential = JSON.parse(localStorage.getItem("credential")) || [];
+    
 
     const handleChange = ({ target: { value } }) => {
         setPasskey(value);
         setError(""); // Clear any existing error when user types
+        
     };
 
     const handleSubmit = (e) => {
@@ -28,10 +31,11 @@ const SiteLogin = () => {
         return;
     }
 
+        localStorage.setItem("Passkey", passkey)
     // Allow the user to vote
     alert("Congrats, you can vote!");
         // Redirect to the voting page
-        window.location.href = "https://admin-steel-iota.vercel.app/voter.html?passkey=${encodeURIComponent(passkey)}`;
+        window.location.href = "https://admin-steel-iota.vercel.app/voter.html`;
     };
 
     return (
