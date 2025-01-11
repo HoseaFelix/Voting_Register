@@ -95,7 +95,7 @@ const WalletReg = () => {
                         Generate Passkey
                     </button>
                     <div className="flex flex-row ">
-                        <p className={isKeyVisible ? 'visible' : 'invisible'}>{form.passkey} <span onClick={handleCopy}>{hasCopied ? 'copied' : 'copy'}</span> </p>
+                        <p className={isKeyVisible ? 'visible' : 'invisible'}>{form.passkey} <span onClick={handleCopy} classname="cursor-pointer">{hasCopied ? 'copied' : 'copy'}</span> </p>
                     </div>
                     <input type="submit" className="font-general w-max m-auto border px-2 rounded-lg"/>
                     <p className="w-max mx-auto">Already Reigistered? </p>
