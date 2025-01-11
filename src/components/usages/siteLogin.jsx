@@ -1,21 +1,16 @@
-import React, {useState} from 'react'
-const credential = JSON.parse(localStorage.getItem('credential'))
-
+import React, { useState } from "react";
 
 const SiteLogin = () => {
-    
-    const [passkey, setPasskey] = useState('')
-  
+    const [passkey, setPasskey] = useState("");
+    const [error, setError] = useState("");
 
-   
+    // Fetch credentials from localStorage
+    const credential = JSON.parse(localStorage.getItem("credential")) || [];
 
-
-
-    const handleChange = ({target:{name, value}})=>{
-
-        setPasskey(value)
-    }
-
+    const handleChange = ({ target: { value } }) => {
+        setPasskey(value);
+        setError(""); // Clear any existing error when user types
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -24,64 +19,61 @@ const SiteLogin = () => {
         const matchingPass = credential.find((credent) => credent.passkey === passkey);
 
         if (!matchingPass) {
-            alert("Passkey not found");
+            setError("Invalid passkey. Please try again.");
             return;
         }
 
         if (matchingPass.voted) {
-            alert("User already voted");
+            setError("This passkey has already been used to vote.");
             return;
         }
 
-        // Allow the user to vote and mark as voted
-        alert("Congrats, you can vote!");
-        matchingPass.voted = true; // Update the voted status
-
-        // Update credentials in localStorage or state if needed
-        localStorage.setItem("credential", JSON.stringify(credential));
+        // Save the current passkey for use on the voting page
+        localStorage.setItem("currentPasskey", passkey);
 
         // Redirect to the voting page
-        window.location.href = 'https://admin-steel-iota.vercel.app/voter.html';
+        window.location.href = "/vote_site.html";
     };
 
-
-
     return (
-        <div className=" w-full sm:mx-10 md:w-1/2 lg:w-1/3 border-[0.1px] sm:min-h-screen md:min-h-[50vh] rounded-lg flex relative text-blue-50  overflow-hidden flex-col justify-between items-center">
-
-            <div className="absolute scale-1 h-[100%] w-[100%] z-0 ">
-                <img
-                    src="/img/forest.jpg"
-                    className="object-cover"
-                />
+        <div className="w-full sm:mx-10 md:w-1/2 lg:w-1/3 border-[0.1px] sm:min-h-screen md:min-h-[50vh] rounded-lg flex relative text-blue-50 overflow-hidden flex-col justify-between items-center">
+            {/* Background Image */}
+            <div className="absolute h-full w-full z-0">
+                <img src="/img/forest.jpg" alt="Background" className="object-cover h-full w-full" />
             </div>
-            <p className="z-10 px-5 md:px-10 special-font text-2xl font-zentry tracking-wide">Voter's credential</p>
 
+            {/* Header */}
+            <p className="z-10 px-5 md:px-10 special-font text-2xl font-zentry tracking-wide">
+                Voter's Credential
+            </p>
+
+            {/* Login Form */}
             <div className="z-10 h-1/2 flex flex-col items-center justify-center">
-                <p className="font-general text-xl">Your Gateway to Freedom!</p>
+                <p className="font-general text-xl mb-4">Your Gateway to Freedom!</p>
 
-                <form className="flex flex-col gap-2 w-full mt-4 py-5" onSubmit={handleSubmit}>
-
+                <form className="flex flex-col gap-4 w-full px-6" onSubmit={handleSubmit}>
                     <input
                         onChange={handleChange}
-                        className="form"
+                        className="form px-3 py-2 rounded-lg border"
                         type="text"
                         placeholder="Enter passkey"
-                        name="name"
                         value={passkey}
                         required
-
                     />
-                    
-                    
-                    <input type="submit" className="font-general w-max m-auto border px-2 rounded-lg"/>
+
+                    {error && (
+                        <p className="text-red-500 text-sm text-center">{error}</p>
+                    )}
+
+                    <input
+                        type="submit"
+                        value="Login"
+                        className="font-general w-max m-auto bg-blue-600 text-white px-4 py-2 rounded-lg cursor-pointer hover:bg-blue-700"
+                    />
                 </form>
             </div>
-
-
         </div>
+    );
+};
 
-
-    )
-}
-export default SiteLogin
+export default SiteLogin;
