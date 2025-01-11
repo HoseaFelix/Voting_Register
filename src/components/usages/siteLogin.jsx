@@ -31,9 +31,11 @@ const SiteLogin = () => {
         return;
     }
 
-        localStorage.setItem("Passkey", passkey)
+        
+        
     // Allow the user to vote
     alert("Congrats, you can vote!");
+        matchingPass.voted = true
         // Redirect to the voting page
         window.location.href = "https://admin-steel-iota.vercel.app/voter.html`;
     };
