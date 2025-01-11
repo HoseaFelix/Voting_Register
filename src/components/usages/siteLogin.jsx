@@ -13,26 +13,25 @@ const SiteLogin = () => {
     };
 
     const handleSubmit = (e) => {
-        e.preventDefault();
+         e.preventDefault();
 
-        // Find the matching credential
-        const matchingPass = credential.find((credent) => credent.passkey === passkey);
+    // Find the matching credential
+    const matchingPass = credential.find((credent) => credent.passkey === passkey);
 
-        if (!matchingPass) {
-            setError("Invalid passkey. Please try again.");
-            return;
-        }
+    if (!matchingPass) {
+        alert("Passkey not found");
+        return;
+    }
 
-        if (matchingPass.voted) {
-            setError("This passkey has already been used to vote.");
-            return;
-        }
+    if (matchingPass.voted) {
+        alert("User already voted");
+        return;
+    }
 
-        // Save the current passkey for use on the voting page
-        localStorage.setItem("currentPasskey", passkey);
-
+    // Allow the user to vote
+    alert("Congrats, you can vote!");
         // Redirect to the voting page
-        window.location.href = "https://admin-steel-iota.vercel.app/voter.html";
+        window.location.href = "https://admin-steel-iota.vercel.app/voter.html?passkey=${encodeURIComponent(passkey)}`;
     };
 
     return (
